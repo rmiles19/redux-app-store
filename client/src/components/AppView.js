@@ -10,6 +10,7 @@ import {
 } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 import AppForm from './AppForm';
+import { deleteApp } from '../actions/apps';
 
 class AppView extends React.Component {
   state = { showForm: false }
@@ -20,6 +21,12 @@ class AppView extends React.Component {
     })
   }
 
+  removeApp = () => {
+    const { app: { id }, dispatch, history } = this.props
+    dispatch(deleteApp(id))
+    history.push('/apps')
+  }
+
   render() {
     const { app = {}} = this.props;
     const { showForm } = this.state;
@@ -28,6 +35,9 @@ class AppView extends React.Component {
         <Link to="/apps">View All Apps</Link>
         <Button onClick={this.toggleForm}>
           { showForm ? 'Cancel' : 'Edit' }
+        </Button>
+        <Button color="red" onClick={this.removeApp}>
+          Delete
         </Button>
         { showForm ?
             <AppForm {...app} closeForm={this.toggleForm} />

@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { addApp } from '../actions/apps';
+import { addApp, updateApp } from '../actions/apps';
 import { Form } from 'semantic-ui-react';
 
 class AppForm extends React.Component {
@@ -29,7 +29,9 @@ class AppForm extends React.Component {
     e.preventDefault();
     const app = {...this.state}
     const { dispatch, closeForm } = this.props;
-    dispatch(addApp(app))
+    const func = this.props.id ? updateApp : addApp
+    dispatch(func(app))
+    this.setState({...this.initialState})
     closeForm();
   }
 
